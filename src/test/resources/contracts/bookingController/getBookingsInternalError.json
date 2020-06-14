@@ -1,0 +1,33 @@
+{
+  "consumer": {
+    "name": "Unknown"
+  },
+  "provider": {
+    "name": "E-Banking portal"
+  },
+  "interactions": [
+    {
+      "description": "a request for bookings",
+      "request": {
+        "method": "GET",
+        "path": "/client/bookings",
+        "headers": {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization": "Bearer internal_error_token"
+        }
+      },
+      "response": {
+        "status": 500,
+        "headers": {
+          "Content-Type": "application/problem+json"
+        },
+        "body": {
+          "title": "Internal Server Error",
+          "status": 500,
+          "detail": "Expected exception for test"
+        }
+      }
+    }
+  ]
+}

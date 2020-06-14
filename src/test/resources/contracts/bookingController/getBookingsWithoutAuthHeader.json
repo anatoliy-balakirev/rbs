@@ -1,0 +1,33 @@
+{
+  "consumer": {
+    "name": "Unknown"
+  },
+  "provider": {
+    "name": "E-Banking portal"
+  },
+  "interactions": [
+    {
+      "description": "a request for bookings",
+      "request": {
+        "method": "GET",
+        "path": "/client/bookings",
+        "headers": {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization": "Bearer invalid_token"
+        }
+      },
+      "response": {
+        "status": 401,
+        "headers": {
+          "Content-Type": "application/problem+json"
+        },
+        "body": {
+          "title": "Unauthorized",
+          "status": 401,
+          "detail": "You are not authorized to access this endpoint"
+        }
+      }
+    }
+  ]
+}
