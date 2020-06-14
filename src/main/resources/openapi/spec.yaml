@@ -1,0 +1,102 @@
+openapi: 3.0.1
+info:
+  title: E-Booking portal
+  description: 'Sample E-Booking portal for RBS'
+  version: 1.0.0
+tags:
+  - name: client
+    description: Client-related functionality
+  - name: booking
+    description: Booking-related functionality
+paths:
+  /client/bookings:
+    get:
+      tags:
+        - client
+        - booking
+      summary: Bookings for client
+      description: Returns all bookings, created in the current calendar month for the currently logged in client
+      operationId: getBookingsForClient
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bookings'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+      security:
+        - bearerAuth: []
+components:
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    InternalServerError:
+      description: Any unexpected server error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+  schemas:
+    Bookings:
+      type: object
+      properties:
+        total:
+          $ref: '#/components/schemas/Amount'
+        bookings:
+          type: array
+          items:
+            $ref: '#/components/schemas/Booking'
+    Booking:
+      type: object
+      properties:
+        client-id:
+          type: string
+          format: uuid
+        amount:
+          $ref: '#/components/schemas/Amount'
+        creation-time:
+          type: string
+          format: date-time
+          description: RFC3339/ISO8601 date time string in format `yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ` (UTC time zone)
+          example: '2020-14-06T08:27:10Z'
+        description:
+          type: string
+    Amount:
+      type: object
+      properties:
+        value:
+          type: integer
+          format: int64
+        currency:
+          type: string
+    Problem:
+      type: object
+      required:
+        - title
+        - status
+      properties:
+        status:
+          type: number
+          description: HTTP status code
+          example: 404
+        title:
+          type: string
+          description: Recommended HTTP status phrase for the returned code
+          example: Not Found
+        detail:
+          type: string
+          description: Custom detail of the problem.
+          example: User with provided id not found
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

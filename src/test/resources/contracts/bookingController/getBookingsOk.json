@@ -1,0 +1,66 @@
+{
+  "consumer": {
+    "name": "Unknown"
+  },
+  "provider": {
+    "name": "E-Banking portal"
+  },
+  "interactions": [
+    {
+      "description": "a request for bookings",
+      "request": {
+        "method": "GET",
+        "path": "/client/bookings",
+        "headers": {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "body": {
+          "total": {
+            "value": 10,
+            "currency": "GBP"
+          },
+          "bookings": [
+            {
+              "client_id": "f14e9d07-a7f8-42bc-87e6-be8d1ffde7d1",
+              "amount": {
+                "value": 10,
+                "currency": "GBP"
+              },
+              "creation_time": "2020-06-14T10:54:27.6374357+02:00",
+              "description": "some booking 1"
+            },
+            {
+              "client_id": "f14e9d07-a7f8-42bc-87e6-be8d1ffde7d1",
+              "amount": {
+                "value": 10,
+                "currency": "GBP"
+              },
+              "creation_time": "2020-06-14T10:54:27.6374357+02:00",
+              "description": "some booking 2"
+            }
+          ]
+        },
+        "matchingRules": {
+          "header": {
+            "Content-Type": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "application/json.*"
+                }
+              ],
+              "combine": "AND"
+            }
+          }
+        }
+      }
+    }
+  ]
+}
