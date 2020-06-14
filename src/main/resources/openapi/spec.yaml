@@ -57,12 +57,12 @@ components:
     Booking:
       type: object
       properties:
-        client-id:
+        client_id:
           type: string
           format: uuid
         amount:
           $ref: '#/components/schemas/Amount'
-        creation-time:
+        creation_time:
           type: string
           format: date-time
           description: RFC3339/ISO8601 date time string in format `yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ` (UTC time zone)

@@ -13,8 +13,7 @@
         "path": "/client/bookings",
         "headers": {
           "Content-Type": "application/json",
-          "Accept": "application/json",
-          "Authorization": "Bearer invalid_token"
+          "Accept": "application/json"
         }
       },
       "response": {
