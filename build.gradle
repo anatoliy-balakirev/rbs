@@ -2,80 +2,81 @@ import org.springframework.cloud.contract.verifier.config.TestFramework
 import org.springframework.cloud.contract.verifier.config.TestMode
 
 buildscript {
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath 'org.springframework.cloud:spring-cloud-contract-gradle-plugin:2.2.3.RELEASE'
-		classpath 'org.springframework.cloud:spring-cloud-contract-pact:2.2.3.RELEASE'
-	}
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.cloud:spring-cloud-contract-gradle-plugin:2.2.3.RELEASE"
+        classpath "org.springframework.cloud:spring-cloud-contract-pact:2.2.3.RELEASE"
+    }
 }
 
 plugins {
-	id 'org.springframework.boot' version '2.3.1.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
-	id 'java'
+    id "org.springframework.boot" version "2.3.1.RELEASE"
+    id "io.spring.dependency-management" version "1.0.9.RELEASE"
+    id "java"
 }
 
-apply plugin: 'spring-cloud-contract'
+apply plugin: "spring-cloud-contract"
 
-group = 'com.rbs'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+group = "com.rbs"
+version = "0.0.1-SNAPSHOT"
+sourceCompatibility = "11"
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 ext {
-	set('springCloudVersion', "Hoxton.SR5")
+    set("springCloudVersion", "Hoxton.SR5")
+    set("problemSpringWebVersion", "0.25.0")
+    set("jsonwebtokenVersion", "0.9.1")
+    set("commonsLang3Version", "3.10")
+    set("pactVersion", "4.0.10")
+    set("swaggerRequestValidatorPactVersion", "2.10.0")
 }
 
 dependencyManagement {
-	imports {
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-	}
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
 }
 
 dependencies {
-//	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-//	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.zalando:problem-spring-web:0.25.0'
-	implementation 'io.jsonwebtoken:jjwt:0.9.1'
-	implementation 'org.apache.commons:commons-lang3:3.10'
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
+    implementation "org.springframework.boot:spring-boot-starter-security"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.zalando:problem-spring-web:${problemSpringWebVersion}"
+    implementation "io.jsonwebtoken:jjwt:${jsonwebtokenVersion}"
+    implementation "org.apache.commons:commons-lang3:${commonsLang3Version}"
 
-//	implementation 'org.flywaydb:flyway-core'
-	compileOnly 'org.projectlombok:lombok'
-//	runtimeOnly 'com.h2database:h2'
-//	runtimeOnly 'org.postgresql:postgresql'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
-	testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
-	testImplementation 'au.com.dius:pact-jvm-provider:4.0.10'
-	testImplementation 'au.com.dius:pact-jvm-consumer:4.0.10'
-	testImplementation 'com.atlassian.oai:swagger-request-validator-pact:2.10.0'
-
-//	testImplementation 'org.springframework.security:spring-security-test'
+    implementation "org.flywaydb:flyway-core"
+    compileOnly "org.projectlombok:lombok"
+    runtimeOnly "com.h2database:h2"
+    annotationProcessor "org.projectlombok:lombok"
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude group: "org.junit.vintage", module: "junit-vintage-engine"
+    }
+    testImplementation "org.springframework.cloud:spring-cloud-starter-contract-verifier"
+    testImplementation "au.com.dius:pact-jvm-provider:${pactVersion}"
+    testImplementation "au.com.dius:pact-jvm-consumer:${pactVersion}"
+    testImplementation "com.atlassian.oai:swagger-request-validator-pact:${swaggerRequestValidatorPactVersion}"
 }
 
 contracts {
-	testFramework = TestFramework.JUNIT5
-	testMode = TestMode.MOCKMVC
-	packageWithBaseClasses = "com.rbs.controller.contract"
-	basePackageForTests = packageWithBaseClasses
+    testFramework = TestFramework.JUNIT5
+    testMode = TestMode.MOCKMVC
+    packageWithBaseClasses = "com.rbs.controller.contract"
+    basePackageForTests = packageWithBaseClasses
 }
 
 test {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }

@@ -1,3 +1,22 @@
 jwt:
   secret: "Yp3s6v9y$B&E)H@McQfTjWmZq4t7w!z%C*F-JaNdRgUkXp2r5u8x/A?D(G+KbPeS"
   validity-seconds: 18000 # 5 hours (5 * 60 * 60)
+
+spring:
+  application:
+    name: rbs
+  datasource:
+    url: jdbc:h2:file:~/data;DB_CLOSE_DELAY=-1;MODE=PostgreSQL;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE;DATABASE_TO_UPPER=FALSE;CASE_INSENSITIVE_IDENTIFIERS=TRUE
+    driverClassName: org.h2.Driver
+    username: postgres
+    password: admin
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false # OSIV is enabled in spring by default and gives warning. We do not need it anyway, so disabling
+  flyway:
+    schemas:
+
+server:
+  port: 8080
