@@ -40,6 +40,8 @@ ext {
     set("commonsLang3Version", "3.10")
     set("pactVersion", "4.0.10")
     set("swaggerRequestValidatorPactVersion", "2.10.0")
+    set("moneyApiVersion", "1.1")
+    set("monetaVersion", "1.4")
 }
 
 dependencyManagement {
@@ -56,6 +58,8 @@ dependencies {
     implementation "org.zalando:problem-spring-web:${problemSpringWebVersion}"
     implementation "io.jsonwebtoken:jjwt:${jsonwebtokenVersion}"
     implementation "org.apache.commons:commons-lang3:${commonsLang3Version}"
+    implementation "javax.money:money-api:${moneyApiVersion}"
+    implementation "org.javamoney:moneta:${monetaVersion}"
 
     implementation "org.flywaydb:flyway-core"
     compileOnly "org.projectlombok:lombok"

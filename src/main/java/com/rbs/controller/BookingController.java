@@ -17,7 +17,7 @@ public class BookingController {
 
     @GetMapping("/client/bookings")
     Bookings getBookingsForClient(@AuthenticationPrincipal final UUID clientId) {
-        return bookingService.getBookingsForClient(clientId);
+        return bookingService.getCurrentMonthBookingsForClient(clientId);
     }
 
 }

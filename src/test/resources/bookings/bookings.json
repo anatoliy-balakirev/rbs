@@ -1,0 +1,26 @@
+{
+  "total": {
+    "value": 21,
+    "currency": "GBP"
+  },
+  "bookings": [
+    {
+      "client_id": "e4473f24-55e6-4e7b-b11a-8211744fbdfe",
+      "amount": {
+        "value": 19,
+        "currency": "GBP"
+      },
+      "creation_time": "2020-06-14T08:54:27.6374357Z",
+      "description": "Some description 1"
+    },
+    {
+      "client_id": "e4473f24-55e6-4e7b-b11a-8211744fbdfe",
+      "amount": {
+        "value": 1,
+        "currency": "USD"
+      },
+      "creation_time": "2020-06-15T08:54:27.6374357Z",
+      "description": "Some description 2"
+    }
+  ]
+}

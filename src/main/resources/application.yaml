@@ -1,6 +1,8 @@
 jwt:
   secret: "Yp3s6v9y$B&E)H@McQfTjWmZq4t7w!z%C*F-JaNdRgUkXp2r5u8x/A?D(G+KbPeS"
   validity-seconds: 18000 # 5 hours (5 * 60 * 60)
+bookings:
+  default_currency_for_total_amount: "GBP"
 
 spring:
   application:

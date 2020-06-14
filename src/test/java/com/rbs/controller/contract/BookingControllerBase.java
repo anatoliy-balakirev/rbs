@@ -53,9 +53,9 @@ public class BookingControllerBase {
         when(jwtService.extractClientId(eq("invalid_token"))).thenThrow(new SignatureException("Invalid token"));
 
         // Configuring the service itself:
-        when(bookingService.getBookingsForClient(eq(CLIENT_ID_OK)))
+        when(bookingService.getCurrentMonthBookingsForClient(eq(CLIENT_ID_OK)))
                 .thenReturn(createBookingsForClient());
-        when(bookingService.getBookingsForClient(eq(CLIENT_ID_ERROR)))
+        when(bookingService.getCurrentMonthBookingsForClient(eq(CLIENT_ID_ERROR)))
                 .thenThrow(new RuntimeException("Expected exception for test"));
     }
 

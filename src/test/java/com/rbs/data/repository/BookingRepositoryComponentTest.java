@@ -9,7 +9,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
+import java.time.LocalTime;
 import java.time.ZonedDateTime;
+import java.time.temporal.TemporalAdjusters;
 import java.util.UUID;
 
 import static java.time.format.DateTimeFormatter.ISO_OFFSET_DATE_TIME;
@@ -54,14 +56,15 @@ class BookingRepositoryComponentTest {
     void testGetByClientIdAndCreationTime() {
         // Preparing some dates here:
         final var offset = NOW.getOffset();
-        final var firstDayOfMonth = NOW.toLocalDate().withDayOfMonth(1).atStartOfDay().toInstant(offset);
-        final var lastDayOfMonth = NOW.toLocalDate().withDayOfMonth(NOW.toLocalDate().lengthOfMonth())
-                .atTime(23, 59, 59).toInstant(offset);
+        final var beginningOfMonth = NOW.toLocalDate().withDayOfMonth(1).atStartOfDay().toInstant(offset);
+        // SQL's 'between' is inclusive, so need to use last day here:
+        final var endOfMonth =
+                NOW.toLocalDate().with(TemporalAdjusters.lastDayOfMonth()).atTime(23, 59, 59).toInstant(offset);
 
         // Current month entities:
-        final var entity1 = bookingEntityBuilder().creationTime(firstDayOfMonth).build();
+        final var entity1 = bookingEntityBuilder().creationTime(beginningOfMonth).build();
         final var entity2 = bookingEntityBuilder().creationTime(NOW.toInstant()).build();
-        final var entity3 = bookingEntityBuilder().creationTime(lastDayOfMonth).build();
+        final var entity3 = bookingEntityBuilder().creationTime(endOfMonth).build();
 
         // Not current month entities:
         final var entity4 = bookingEntityBuilder().creationTime(NOW.plusDays(30).toInstant()).build();
@@ -78,7 +81,7 @@ class BookingRepositoryComponentTest {
         assertEquals(5, bookingRepository.findAllByClientId(CLIENT_ID).size());
 
         final var actualBookingEntities =
-                bookingRepository.findAllByClientIdAndCreationTimeBetween(CLIENT_ID, firstDayOfMonth, lastDayOfMonth);
+                bookingRepository.findAllByClientIdAndCreationTimeBetween(CLIENT_ID, beginningOfMonth, endOfMonth);
         assertNotNull(actualBookingEntities);
         assertEquals(3, actualBookingEntities.size(),
                 "Only entities for current month are supposed to be returned");
