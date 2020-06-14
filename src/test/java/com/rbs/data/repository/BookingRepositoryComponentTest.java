@@ -29,11 +29,6 @@ class BookingRepositoryComponentTest {
     @Autowired
     private BookingRepository bookingRepository;
 
-    @BeforeEach
-    void cleanup() {
-        bookingRepository.deleteAll();
-    }
-
     @Test
     void testSave() {
         final var id = bookingRepository.save(createBookingEntity()).getId();
