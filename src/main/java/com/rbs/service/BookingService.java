@@ -71,6 +71,8 @@ public class BookingService {
     }
 
     private static Amount toAmount(final BigDecimal value, final String currency) {
+        // This mapping doesn't set proper scale based on currency, so we might return, for example, 5 decimal places
+        // for USD, which doesn't make sense:
         return Amount.builder().value(value).currency(currency).build();
     }
 }

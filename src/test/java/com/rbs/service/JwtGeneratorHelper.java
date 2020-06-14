@@ -25,7 +25,7 @@ class JwtGeneratorHelper {
 
     @Test
     void generateToken() {
-        final var token = jwtService.generateToken(UUID.fromString("f14e9d07-a7f8-42bc-87e6-be8d1ffde7d1"));
+        final var token = jwtService.generateToken(UUID.fromString("e4473f24-55e6-4e7b-b11a-8211744fbdfa"));
         System.out.println("Generated token is: " + token);
     }
 }
