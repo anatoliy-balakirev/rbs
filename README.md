@@ -26,6 +26,14 @@ In order to test this service end to end - first start it by executing:
 
 `./gradlew bootRun`
 
+Alternatively, build a docker image with:
+
+`./gradlew bootBuildImage`
+
+And then run it with something like:
+
+`docker container run -p 8080:8080 rbs:0.0.1-SNAPSHOT`
+
 Then create JWT token by running:
 
 `./gradlew test --tests com.rbs.service.JwtGeneratorHelper.generateToken`
@@ -44,4 +52,5 @@ Send `GET` request to `http://localhost:8080/client/bookings` using that token a
 * Auth server is not supposed to be part of this micro-service, but it's also not provided as a standalone one. So in order to create a token - test must be used.
 * Open API spec is not exposed via an endpoint in the running service.
 * There are no integration tests (even though everything is covered with unit and componet tests, so it's not a big deal).
-* There is no currently way to create a docker image / there are no k8s scripts. 
+* Currently, creation of the docker image is not configured properly: it is using defaults, which do not have volume and are using weird tag.
+* K8s deployment descriptors are not provided. 
